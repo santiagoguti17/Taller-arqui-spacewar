@@ -8,7 +8,7 @@ import java.awt.*;
 public abstract class AbstractVectorialBullet implements BulletGraphic {
 
     protected abstract Color getBulletColor();
-
+    
     @Override
     public void render(Graphics g, double x, double y) {
         g.setColor(getBulletColor());

@@ -128,9 +128,6 @@ public class Game extends Canvas implements Runnable {
 		System.exit(1);
 	}
 	
-	/*
-	 * Game thread runner. 
-	 */
 	@Override
 	public void run() {
         try {
@@ -169,17 +166,11 @@ public class Game extends Canvas implements Runnable {
 		stop();
 	}
 	
-	/*
-	 * Run the ticks of all game components.
-	 */
 	public void tick(){
 		player.tick();
 		bullets.tick();
 	}
-	
-	/*
-	 * Render overall game components.
-	 */
+
 	public void render(){
 		BufferStrategy bs = this.getBufferStrategy();
 		if(bs == null){
@@ -188,14 +179,11 @@ public class Game extends Canvas implements Runnable {
 		}
 		
 		Graphics g = bs.getDrawGraphics();
-		/////////////////////////////////
-
+		
         background.render(g, this);
         player.render(g);
         bullets.render(g);
 
-
-        ////////////////////////////////
 		g.dispose();
 		bs.show();
 	}
