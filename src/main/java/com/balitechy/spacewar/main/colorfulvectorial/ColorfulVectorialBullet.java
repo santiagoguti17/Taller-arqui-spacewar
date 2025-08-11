@@ -7,6 +7,6 @@ import java.awt.*;
 public class ColorfulVectorialBullet extends AbstractVectorialBullet {
     @Override
     protected Color getBulletColor() {
-        return Color.WHITE;
+        return Color.RED;
     }
 }

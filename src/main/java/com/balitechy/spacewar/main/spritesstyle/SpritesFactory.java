@@ -1,6 +1,5 @@
 package com.balitechy.spacewar.main.spritesstyle;
 
-import com.balitechy.spacewar.main.Game;
 import com.balitechy.spacewar.main.SpritesImageLoader;
 import com.balitechy.spacewar.main.interfaces.BackgroundGraphic;
 import com.balitechy.spacewar.main.interfaces.BulletGraphic;

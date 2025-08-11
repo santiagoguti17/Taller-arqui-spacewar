@@ -7,7 +7,7 @@ import com.balitechy.spacewar.main.vectorialstyle.VectorialFactory;
 
 public class GameConfig {
     // Cambia esta línea para cambiar el estilo
-    private static final GraphicFactory factory = new ColorfulVectorialFactory();
+    private static final GraphicFactory factory = new SpritesFactory(); 
 
     public static GraphicFactory getFactory() {
         return factory;

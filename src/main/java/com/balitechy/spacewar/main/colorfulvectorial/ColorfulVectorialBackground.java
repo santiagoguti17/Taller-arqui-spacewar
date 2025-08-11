@@ -7,12 +7,12 @@ import java.awt.*;
 public class ColorfulVectorialBackground extends AbstractVectorialBackground {
     @Override
     protected Color getBackgroundColor() {
-        return Color.BLUE;
+        return Color.CYAN;
     }
 
     @Override
     protected Color getCircleColor() {
-        return Color.GREEN;
+        return Color.ORANGE;
     }
 
     @Override
