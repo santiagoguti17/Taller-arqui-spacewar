@@ -1,5 +1,6 @@
 package com.balitechy.spacewar.main;
 
+import com.balitechy.spacewar.main.colorfulvectorial.ColorfulVectorialFactory;
 import com.balitechy.spacewar.main.interfaces.BackgroundGraphic;
 import com.balitechy.spacewar.main.interfaces.BulletGraphic;
 import com.balitechy.spacewar.main.interfaces.GraphicFactory;
@@ -16,6 +17,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class Game extends Canvas implements Runnable {
 
@@ -199,20 +201,49 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 	public static void main(String args[]){		
-		Game game = new Game();
-		game.setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
-		game.setMaximumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
-		game.setMinimumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
-		
-		JFrame frame = new JFrame(game.TITLE);
-		frame.add(game);
-		frame.pack();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setResizable(false);
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
-		
-		game.start();
-	}
+    String[] options = { "Sprites", "Vectorial", "Colorful Vectorial" };
+    int choice = JOptionPane.showOptionDialog(
+        null,
+        "Elige el estilo de gráficos:",
+        "Configuración de Estilo",
+        JOptionPane.DEFAULT_OPTION,
+        JOptionPane.QUESTION_MESSAGE,
+        null,
+        options,
+        options[0]
+    );
+
+    GraphicFactory selectedFactory;
+    switch (choice) {
+        case 0:
+            selectedFactory = new SpritesFactory();
+            break;
+        case 1:
+            selectedFactory = new VectorialFactory();
+            break;
+        case 2:
+            selectedFactory = new ColorfulVectorialFactory();
+            break;
+        default:
+            selectedFactory = new SpritesFactory(); // Valor por defecto
+    }
+
+    GameConfig.setFactory(selectedFactory);
+
+    Game game = new Game();
+    game.setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
+    game.setMaximumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
+    game.setMinimumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
+
+    JFrame frame = new JFrame(game.TITLE);
+    frame.add(game);
+    frame.pack();
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.setResizable(false);
+    frame.setLocationRelativeTo(null);
+    frame.setVisible(true);
+
+    game.start();
+}
 	
 }
