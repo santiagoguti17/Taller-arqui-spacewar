@@ -1,5 +1,12 @@
 package com.balitechy.spacewar.main;
 
+import com.balitechy.spacewar.main.interfaces.BackgroundGraphic;
+import com.balitechy.spacewar.main.interfaces.BulletGraphic;
+import com.balitechy.spacewar.main.interfaces.GraphicFactory;
+import com.balitechy.spacewar.main.interfaces.PlayerGraphic;
+import com.balitechy.spacewar.main.spritesstyle.SpritesFactory;
+import com.balitechy.spacewar.main.vectorialstyle.VectorialFactory;
+
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -28,36 +35,24 @@ public class Game extends Canvas implements Runnable {
 	//Game components
 	private Player player;
 	private BulletController bullets;
-	private BackgroundRenderer backgRenderer;
+	private BackgroundGraphic background;
+	private GraphicFactory graphicFactory;
 	
-	
-	public void init(){
+	public void init() throws IOException {
 		requestFocus();
-		
-		
-		sprites = new SpritesImageLoader("/sprites.png");
-		try {			
-			sprites.loadImage();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
+
+		graphicFactory = GameConfig.getFactory();
+		background = graphicFactory.createBackground();
+		bullets = new BulletController();
+
 		// Add keyboard listener
 		addKeyListener(new InputHandler(this));
 		
-		// Initialize game components.
-		
-		
 		// Set player position at the bottom center.
 		player = new Player((WIDTH * SCALE - Player.WIDTH) / 2, HEIGHT * SCALE - 50 , this);
-		bullets = new BulletController();
-		backgRenderer=new BackgroundRenderer();
+
 	}
 
-	public SpritesImageLoader getSprites(){
-		return sprites;
-	}
-	
 	public BulletController getBullets(){
 		return bullets;
 	}
@@ -136,9 +131,13 @@ public class Game extends Canvas implements Runnable {
 	 */
 	@Override
 	public void run() {
-		init();
-		
-		long lastTime = System.nanoTime();
+        try {
+            init();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        long lastTime = System.nanoTime();
 		final double numOfTicks = 60.0;
 		double ns = 1000000000 / numOfTicks;
 		double delta = 0;
@@ -188,20 +187,13 @@ public class Game extends Canvas implements Runnable {
 		
 		Graphics g = bs.getDrawGraphics();
 		/////////////////////////////////
-		
-		try {
-			backgRenderer.render(g, this);
-			player.render(g);
-			bullets.render(g);
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		
-		
-		
-		////////////////////////////////
+        background.render(g, this);
+        player.render(g);
+        bullets.render(g);
+
+
+        ////////////////////////////////
 		g.dispose();
 		bs.show();
 	}

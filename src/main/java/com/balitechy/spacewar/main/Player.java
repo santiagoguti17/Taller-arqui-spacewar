@@ -1,11 +1,16 @@
 package com.balitechy.spacewar.main;
 
+import com.balitechy.spacewar.main.interfaces.BulletGraphic;
+import com.balitechy.spacewar.main.interfaces.PlayerGraphic;
+import com.balitechy.spacewar.main.spritesstyle.SpritesBullet;
+import com.balitechy.spacewar.main.vectorialstyle.VectorialBullet;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 public class Player {
-	
+
 	private double x;
 	private double y;
 	
@@ -14,33 +19,18 @@ public class Player {
 	
 	public static final int WIDTH = 56;
 	public static final int HEIGHT = 28;
-	
-	private BufferedImage image;
+
 	private Game game;
-	
-	public Player(double x, double y, Game game){
+
+
+	private PlayerGraphic graphic;
+
+
+	public Player(double x, double y, Game game) {
 		this.x = x;
 		this.y = y;
+		this.graphic = GameConfig.getFactory().createPlayer();
 		this.game = game;
-		
-		// Get image for Player		
-		image = game.getSprites().getImage(219, 304, WIDTH, HEIGHT);
-	}
-	
-	public double getX() {
-		return x;
-	}
-
-	public void setX(double x) {
-		this.x = x;
-	}
-
-	public double getY() {
-		return y;
-	}
-
-	public void setY(double y) {
-		this.y = y;
 	}
 
 	public void setVelX(double velX) {
@@ -50,9 +40,9 @@ public class Player {
 	public void setVelY(double velY) {
 		this.velY = velY;
 	}
-	
-	public void shoot(){
-		Bullet b = new Bullet(x+(WIDTH/2)-5, y-18, game);
+
+	public void shoot() {
+		Bullet b = new Bullet(x + (WIDTH / 2) - 5, y - 18);
 		game.getBullets().addBullet(b);
 	}
 
@@ -70,9 +60,8 @@ public class Player {
 		if(y >= (Game.HEIGHT * Game.SCALE) - HEIGHT)
 			y = (Game.HEIGHT * Game.SCALE) - HEIGHT;
 	}
-	
-	public void render(Graphics g){
-		g.setColor(Color.white);
-		g.drawImage(image, (int) x, (int) y, null);
+
+	public void render(Graphics g) {
+		graphic.render(g, x, y);
 	}
 }
